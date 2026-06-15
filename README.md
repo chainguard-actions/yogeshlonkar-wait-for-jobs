@@ -8,6 +8,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
+| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1.0.0) | [`e4bfea4`](https://github.com/yogeshlonkar/wait-for-jobs/commit/e4bfea40d73c9cd1aea4bdc03ab4717ebb4480e1) |
 | v1.0.1 | [`v1.0.1`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1.0.1) | [`b4b4a50`](https://github.com/yogeshlonkar/wait-for-jobs/commit/b4b4a509d5233042446fb369b48e8ce23b74c165) |
 
 ## Privacy
