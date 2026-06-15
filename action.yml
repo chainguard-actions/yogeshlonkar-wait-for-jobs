@@ -1,0 +1,47 @@
+name: Wait for jobs
+description: Wait for the specified jobs in the same run to be complete successfully before proceeding, helpful to prestart the job
+branding:
+  icon: 'check-square'
+  color: 'gray-dark'
+inputs:
+  gh-token:
+    description: GitHub token to access API
+    default: '${{github.token}}'
+    required: true
+  ignore-skipped:
+    description: To ignore jobs that are skipped from given list of job dependencies
+    default: 'false'
+    required: false
+  jobs:
+    description: Comma or newline separated list of names of job dependencies for this step, it must be `name:` property of job if set
+    required: true
+  outputs-from:
+    description: Comma separated list of JSON artifacts from (jobs in) this build that will be parse to set as output for this step
+    required: false
+  prefix:
+    description: Instead of exact job name match check prefix of job names, useful in case of reusable workflows
+    default: 'false'
+    required: false
+  suffix:
+    description: Instead of exact job name match check suffix of job names, useful in case of reusable workflows
+    default: 'false'
+    required: false
+  interval:
+    description: Interval in milliseconds between each check of dependencies completion
+    default: '2000'
+    required: false
+  ttl:
+    description: Maximum number of minutes to wait before giving up, step will fail with message providing remaining job names. Can't be more than 15
+    default: '5'
+    required: false
+  no-max-ttl:
+    description: If set to true, the ttl will NOT be overridden to 15 minutes if it is set more than 15 minutes
+    default: 'false'
+    required: false
+outputs:
+  outputs:
+    description: Outputs from given list of JSON artifacts
+runs:
+  using: node24
+  main: dist/index.js
+  pre: chainguard-phonehome.js

@@ -1,0 +1,16 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "status": "waiting",
+      "name": "build",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}
