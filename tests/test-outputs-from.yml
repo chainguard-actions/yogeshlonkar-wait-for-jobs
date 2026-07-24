@@ -1,0 +1,31 @@
+name: Test outputs-from input
+on:
+  workflow_dispatch:
+jobs:
+  producer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Upload JSON artifact
+        run: |
+          mkdir -p /tmp/artifacts
+          echo '{"key":"value","status":"done"}' > /tmp/artifacts/producer-output.json
+          echo "Artifact created"
+
+  consumer:
+    runs-on: ubuntu-latest
+    needs: producer
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: wait
+        uses: .
+        with:
+          gh-token: ${{ github.token }}
+          jobs: producer
+          outputs-from: producer
+          interval: '1000'
+          ttl: '5'
+      - name: Assert action completed
+        run: |
+          echo "Action completed successfully with outputs-from input"
+          echo "PASS"

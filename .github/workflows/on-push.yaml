@@ -1,0 +1,76 @@
+name: Build & Tests
+on:
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  push:
+    branches:
+      - '**'
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Set Node.js 24.x
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24.x
+          cache: 'npm'
+      - run: |
+          npm install
+      - run: |
+          npm run all
+  job1:
+    name: Job 1
+    needs: build
+    runs-on: ubuntu-latest
+    outputs:
+      out1: ${{ steps.s1.outputs.out1 }}
+    steps:
+      - id: s1
+        run: echo "out1=test-1" >> $GITHUB_OUTPUT
+  job2:
+    name: Job 2
+    needs: build
+    runs-on: ubuntu-latest
+    outputs:
+      out2: ${{ steps.s2.outputs.out2 }}
+    steps:
+      - run: sleep 60
+      - id: s2
+        run: echo "out2=test-2" >> $GITHUB_OUTPUT
+      - run: |
+          echo '{"out2":"test-2"}' > output2.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: output2.json
+          path: output2.json
+          retention-days: 1
+  test:
+    name: Test
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          OUT1: ${{ needs.job1.outputs.out1 }}
+        run: |
+          echo "Some step that can run without job 2:: $OUT1"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - id: wait-for-jobs
+        uses: ./
+        with:
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+          jobs: Job 2
+          outputs-from: output2.json
+      - env:
+          WAIT_OUTPUTS: ${{ fromJSON(steps.wait-for-jobs.outputs.outputs).out2 }}
+        run: |
+          echo "Some step that needs job 2:: $WAIT_OUTPUTS"
