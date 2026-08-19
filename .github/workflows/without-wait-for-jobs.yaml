@@ -1,0 +1,59 @@
+name: Without wait-for-jobs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  start:
+    name: Start
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Some step"
+  job1:
+    name: Job 1
+    needs: start
+    runs-on: ubuntu-latest
+    outputs:
+      out1: ${{ steps.s1.outputs.out1 }}
+    steps:
+      - run: sleep 10
+      - id: s1
+        run: echo "out1=test-1" >> $GITHUB_OUTPUT
+  job2:
+    name: Job 2
+    needs: start
+    runs-on: ubuntu-latest
+    outputs:
+      out2: ${{ steps.s2.outputs.out2 }}
+    steps:
+      - run: sleep 15
+      - id: s2
+        run: echo "out2=test-2" >> $GITHUB_OUTPUT
+  job3:
+    name: Job 3
+    needs: start
+    runs-on: ubuntu-latest
+    outputs:
+      out3: ${{ steps.s3.outputs.out3 }}
+    steps:
+      - run: sleep 60
+      - id: s3
+        run: echo "out3=test-3" >> $GITHUB_OUTPUT
+  job4:
+    name: Job 4
+    needs: [job1, job2, job3]
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          JOB1_OUT1: ${{ needs.job1.outputs.out1 }}
+          JOB2_OUT2: ${{ needs.job2.outputs.out2 }}
+        run: |
+          echo "Some step that can run without job 3:: $JOB1_OUT1 :: $JOB2_OUT2"
+      - run: sleep 60
+      - env:
+          JOB3_OUT3: ${{ needs.job3.outputs.out3 }}
+        run: |
+          echo "Some step that needs job 3:: $JOB3_OUT3"

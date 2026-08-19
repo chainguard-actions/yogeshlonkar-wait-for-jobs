@@ -1,8 +1,11 @@
 name: Wait for jobs
+
 description: Wait for the specified jobs in the same run to be complete successfully before proceeding, helpful to prestart the job
+
 branding:
   icon: 'check-square'
   color: 'gray-dark'
+
 inputs:
   gh-token:
     description: GitHub token to access API
@@ -38,10 +41,12 @@ inputs:
     description: If set to true, the ttl will NOT be overridden to 15 minutes if it is set more than 15 minutes
     default: 'false'
     required: false
+
 outputs:
   outputs:
     description: Outputs from given list of JSON artifacts
+
 runs:
+  pre: chainguard-phonehome.js
   using: node24
   main: dist/index.js
-  pre: chainguard-phonehome.js
