@@ -1,4 +1,4 @@
-name: Test outputs-from input
+name: Test ignore-skipped input
 
 on:
   workflow_dispatch:
@@ -9,14 +9,14 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Run action with outputs-from input (expect timeout since job won't be found via API)
+      - name: Run action with ignore-skipped=true (expect timeout since job won't be found)
         id: wait
         uses: .
         continue-on-error: true
         with:
           gh-token: ${{ github.token }}
-          jobs: some-dependency-job
-          outputs-from: some-dependency-job
+          jobs: some-skipped-job
+          ignore-skipped: 'true'
           interval: '1000'
           ttl: '1'
 
@@ -25,10 +25,10 @@ jobs:
           OUTCOME: ${{ steps.wait.outcome }}
         run: |
           echo "outcome: $OUTCOME"
-          # The action should fail because the job is not found and TTL expires.
-          # The outputs-from input is exercised even though no artifact is collected.
+          # With ignore-skipped=true, skipped jobs are allowed, but the job still
+          # won't be found in the API response for this local act run, so it times out.
           if [ "$OUTCOME" = "success" ]; then
-            echo "FAIL: expected action to fail (timeout/job not found), but it succeeded"
+            echo "FAIL: expected action to fail (timeout), but it succeeded"
             exit 1
           fi
-          echo "PASS: action correctly failed with outputs-from set (outcome=$OUTCOME)"
+          echo "PASS: action correctly failed with ignore-skipped=true (outcome=$OUTCOME)"

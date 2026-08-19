@@ -1,0 +1,73 @@
+name: With wait-for-jobs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  start:
+    name: Start
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Some step"
+  job1:
+    name: Job 1
+    needs: start
+    runs-on: ubuntu-latest
+    outputs:
+      out1: ${{ steps.s1.outputs.out1 }}
+    steps:
+      - run: sleep 10
+      - id: s1
+        run: echo "out1=test-1" >> $GITHUB_OUTPUT
+  job2:
+    name: Job 2
+    needs: start
+    runs-on: ubuntu-latest
+    outputs:
+      out2: ${{ steps.s2.outputs.out2 }}
+    steps:
+      - run: sleep 15
+      - id: s2
+        run: echo "out2=test-2" >> $GITHUB_OUTPUT
+  job3:
+    name: Job 3
+    needs: start
+    runs-on: ubuntu-latest
+    outputs:
+      out3: ${{ steps.s3.outputs.out3 }}
+    steps:
+      - run: sleep 60
+      - id: s3
+        run: echo "out3=test-3" >> $GITHUB_OUTPUT
+      - run: |
+          echo '{"out3":"test-3"}' > output3.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: output3.json
+          path: output3.json
+          retention-days: 1
+  job4:
+    name: Job 4
+    needs: [job1, job2]
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Some step that can run without job 3:: $JOB1_OUT1 :: $JOB2_OUT2"
+        env:
+          JOB1_OUT1: ${{ needs.job1.outputs.out1 }}
+          JOB2_OUT2: ${{ needs.job2.outputs.out2 }}
+      - run: sleep 60
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - id: wait-for-jobs
+        uses: ./
+        with:
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+          jobs: Job 3
+          outputs-from: output3.json
+      - run: |
+          echo "Some step that needs job 3:: $WAIT_OUT3"
+        env:
+          WAIT_OUT3: ${{ fromJSON(steps.wait-for-jobs.outputs.outputs).out3 }}
