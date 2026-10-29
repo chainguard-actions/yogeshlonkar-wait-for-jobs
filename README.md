@@ -6,13 +6,13 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1 | [`v1`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1) | [`e4bfea4`](https://github.com/yogeshlonkar/wait-for-jobs/commit/e4bfea40d73c9cd1aea4bdc03ab4717ebb4480e1) |
-| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1.0.0) | [`e4bfea4`](https://github.com/yogeshlonkar/wait-for-jobs/commit/e4bfea40d73c9cd1aea4bdc03ab4717ebb4480e1) |
-| v1.0.1 | [`v1.0.1`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1.0.1) | [`b4b4a50`](https://github.com/yogeshlonkar/wait-for-jobs/commit/b4b4a509d5233042446fb369b48e8ce23b74c165) |
-| v1.0.3 | [`v1.0.3`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1.0.3) | [`69a4ff0`](https://github.com/yogeshlonkar/wait-for-jobs/commit/69a4ff07c63e4f28c8abe4fa4fe6d5aed8fc2147) |
-| v1.0.4 | [`v1.0.4`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1.0.4) | [`8c6359f`](https://github.com/yogeshlonkar/wait-for-jobs/commit/8c6359f0b91000818ca5b3b8c6a44db5cf8133b9) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v1 | [`v1`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1) | [`e4bfea4`](https://github.com/yogeshlonkar/wait-for-jobs/commit/e4bfea40d73c9cd1aea4bdc03ab4717ebb4480e1) | — |
+| v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1.0.0) | [`e4bfea4`](https://github.com/yogeshlonkar/wait-for-jobs/commit/e4bfea40d73c9cd1aea4bdc03ab4717ebb4480e1) | [`HARDENING.md`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/blob/v1.0.0/HARDENING.md) |
+| v1.0.1 | [`v1.0.1`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1.0.1) | [`b4b4a50`](https://github.com/yogeshlonkar/wait-for-jobs/commit/b4b4a509d5233042446fb369b48e8ce23b74c165) | [`HARDENING.md`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/blob/v1.0.1/HARDENING.md) |
+| v1.0.3 | [`v1.0.3`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1.0.3) | [`69a4ff0`](https://github.com/yogeshlonkar/wait-for-jobs/commit/69a4ff07c63e4f28c8abe4fa4fe6d5aed8fc2147) | [`HARDENING.md`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/blob/v1.0.3/HARDENING.md) |
+| v1.0.4 | [`v1.0.4`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/tree/v1.0.4) | [`8c6359f`](https://github.com/yogeshlonkar/wait-for-jobs/commit/8c6359f0b91000818ca5b3b8c6a44db5cf8133b9) | [`HARDENING.md`](https://github.com/chainguard-actions/yogeshlonkar-wait-for-jobs/blob/v1.0.4/HARDENING.md) |
 
 ## Privacy
 
