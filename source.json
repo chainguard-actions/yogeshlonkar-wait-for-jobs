@@ -4,8 +4,13 @@
   "version": "v1.0.3",
   "commit_sha": "69a4ff07c63e4f28c8abe4fa4fe6d5aed8fc2147",
   "url": "https://github.com/yogeshlonkar/wait-for-jobs",
-  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "policy_sha": "374911c4be584df24e6da57af2d990570ef0f859",
   "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
   "test_agent_version": "2",
-  "harden_agent_version": "2"
+  "harden_agent_version": "2",
+  "dist_artifact": {
+    "gcs_uri": "gs://patch-actions-node-artifacts/dist-artifacts/yogeshlonkar/wait-for-jobs/v1.0.3/sha256-d25867d082fb3c4f52944511a5750b70e942d871b057e20b28b87461e637df3e.tar.gz",
+    "sha256": "d25867d082fb3c4f52944511a5750b70e942d871b057e20b28b87461e637df3e",
+    "size_bytes": 1919733
+  }
 }
